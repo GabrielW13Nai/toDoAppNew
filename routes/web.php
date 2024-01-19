@@ -15,16 +15,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('signup');
 });
 
 Route::get('/todoApp',  function (){
     return view('toDoApp');
 });
 
-Route::get('/login', function () {
-    return view('login');
+Route::get("/login", function(){
+    return view ('login');
+});
+
+Route::get('/signup', function () {
+    return view('signup');
 });
 
 
-Route::post('/register', [UserController::class, 'register'] );
+Route::post('/register', [UserController::class, 'register']);
+
+Route::post('/logout', [UserController::class, 'logout']);
+
+Route::post('/login', [UserController::class, 'login']);

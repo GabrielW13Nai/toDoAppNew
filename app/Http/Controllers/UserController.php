@@ -2,16 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
-{
-    public function register(Request $request){
-        $inputFields = $request -> validate([
-            "name" => ["required", "min:3", "max:10"],
-            "email" => ["required", "email"],
-            "password" => ["required", "min:8", "max: 200"]
-        ]);
-        return view('/toDoApp');
-    }
+{   
+        public function login(Request $request){
+            $incomingFields = $request->validate([
+                'email' => 'required',
+                'password' => 'required'
+            ]);
+
+            if(auth()->attempt(['email' => $incomingFields['email'], 'password' => $incomingFields['password']])){
+                $request->session()->regenerate();
+            };
+            return redirect('/toDoApp');
+        }
+
+        public function logout(){
+            auth()->logout();
+            return redirect('/');
+        }
+        public function register(Request $request){
+            $inputFields = $request->validate([
+                "name" => ['required', 'min:3' , 'max: 200', Rule::unique('users', 'name')],
+                "email" => ['required', 'email', Rule::unique('users', 'email')],
+                "password" => ['required', "min:8", "max:50"]
+            ]);
+
+            $inputFields['password'] = bcrypt($inputFields['password']);
+            
+            $user = User::create($inputFields);
+            auth()->login($user);
+
+            return redirect('/');
+
+        }
 }

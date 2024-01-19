@@ -6,8 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-
     <section class="todoapp">
+        <div class="header"></div>
         <div class="tasks">
             <form action="" class="tasks" id="tasks">
                 <input type="text" class="task-input" value="" placeholder="Add task here..."/>
@@ -26,6 +26,9 @@
             </div>
         </div>
     </section>
+
+
+    
    
     
 </body>
