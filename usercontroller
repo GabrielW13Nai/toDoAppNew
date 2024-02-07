@@ -1,0 +1,38 @@
+// public function register(){
+//    $incoming = $Validator::make($request->all(),[
+//         "uname" = "required|string|max:255|",
+//         "email" = "required|email",
+//         "password" = "required|string|min:8"
+//    ]);
+
+//    if($Validator->fails()){
+//         return redirect(register)
+//         ->withErrors($Validator)
+//         ->withInput();
+   
+//    }
+// }
+
+function userTasks(){
+    return $this->hasMany(Task::class, 'task_id')
+}
+
+
+Route::get(if(auth()->check()){
+    $tasks = auth()->user()->userTasks()->latest()->get();
+    return view('dashboard', ['tasks' => $tasks])
+})
+
+Route::get('/login', [TaskController::class, 'login']);
+
+Auth::guard('web')->logout();
+            $request->session->invalidate();
+            $request->session->regenerateToken();
+
+            $notification  =array(
+                'message' => 'User logout is successful',
+                'alert-type'=> 'success'
+            );
+
+            return redirect('/login')
+            ->with($notification);

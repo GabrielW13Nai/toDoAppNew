@@ -1,0 +1,49 @@
+public function createTask(Request $request){
+    $incoming = $request->validate([
+        "name" => "required", "string" , "max:255",
+        "description" => "required", "min:255"
+        "user_id"=> "required"
+    ]);
+
+    $incoming["name"] = strip_tags($incoming["name"]);
+    $incoming["description"] = strip_tags($incoming["description"]);
+    $incoming["user_id"] = auth()->id();
+
+    Task::create($incoming);
+    return redirect('/dashboard');
+
+
+}
+
+public function showEditTask(){
+    if(auth()->user()->id !== $task["user_id"]){
+        return redirect('/dashboard');
+    }
+    return view('/edittask', ['task' => $task]);  
+
+}
+
+pubic function updateTask(Request $request, Task $task){
+    if(auth()->user()->id !== $task["user_id"]){
+        return redirect('/signin');
+    }
+    $incoming = $request->validate([
+        "name" => "required", "string" , "max:255",
+        "description" => "required", "min:255"
+        "user_id"=> "required"
+    ]);
+
+    $task->update($incoming)
+    return redirect('/dashboard');
+    
+}
+
+
+public function deleteTask(Task $task){
+    if(auth()->user()->id === $task["user_id"]){
+        $task->delete();
+    }
+
+    return redirect('/dashboard')
+}
+
