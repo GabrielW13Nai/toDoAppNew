@@ -68,7 +68,10 @@ class TaskController extends Controller
 
         Task::create($incoming);
         return redirect('dashboard');
-    
+          
 }
     //
+    public function showAddTask(){
+        return view('viewtask');
+    }
 }

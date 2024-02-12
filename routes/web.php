@@ -1,9 +1,11 @@
 <?php
 
-// use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,49 +19,51 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('signup');
+    return view('auth.login');
 });
 
-Route::get('/dashboard',  function (){
-    // $tasks = Task::where('user_id', auth()->id())->get();
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/admin', function () {
+    return view('admin.index');
+})->middleware(['auth' , 'role:admin', 'verified'])->name('admin.index');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/dashboard', function(){
     if(auth()->check()){
         $user = auth()->user();
-        $tasks =$user->usersTasks()->latest()->get();
-        return view('dashboard', ['tasks' => $tasks, 'user' => $user]);
+        $tasks = $user->usersTasks()->latest()->get();
+        return view('dashboard', ['user' => $user, 'tasks' => $tasks]);
     }
-    
 })->name('dashboard');
 
-Route::get("/login", function(){
-    return view ('login');
+
+
+Route::middleware(['auth', 'role:admin', 'verified'])->name('admin.')->prefix('admin')->group(function(){
+    Route::get('/index', [IndexController::class, 'index'])->name('index');
+    Route::resource('/roles', RoleController::class);
+    Route::resource('/permissions', PermissionController::class);
 });
 
-Route::get('/register', function () {
-    return view('signup');
-});
+
+require __DIR__.'/auth.php';
 
 
 
+Route::get('/addtask', [TaskController::class, 'showAddTask']);
+Route::get('/taskdisplay/{task}', [TaskController::class, 'showCurrentTask']);
 
+Route::post('/addtask', [TaskController::class, 'createTask']);
 
-Route::post('/register', [UserController::class, 'register']);
-
-Route::post('/logout', [UserController::class, 'logout']);
-
-Route::post('/login', [UserController::class, 'login']);
-
-Route::post('/addtask', [TaskController::class, 'createTask']);        //Task creation
-
-Route::get('/edittask/{task}', [TaskController::class, 'showEditTask']); //task edit form
+Route::get('/edittask/{task}', [TaskController::class, 'showEditTask']);
 
 Route::put('/edittask/{task}', [TaskController::class, 'updatedTask']);
 
 Route::delete('/deletetask/{task}', [TaskController::class, 'deletedTask']);
-
-// Route::get('/dashboard', [TaskController::class, 'index'] );
-
-Route::get('/addtask', function () {
-    return view('viewtask');
-});
-
-Route::get('/taskdisplay/{task}', [TaskController::class, 'showCurrentTask']);

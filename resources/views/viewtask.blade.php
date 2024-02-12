@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+<x-app-layout>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree&family=Indie+Flower&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,800;0,900;1,400&family=Oswald:wght@600&family=Poppins:wght@300;400;500;600;700;800&family=Roboto+Slab:wght@400;800&family=Roboto:wght@300;400;500;700;900&display=swap');
         
@@ -45,16 +38,6 @@
             border-radius: 4px;
             height: 7.5rem;
             width: 80%;  
-        }
-
-        button {
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 1rem;
         }
 
 
@@ -162,13 +145,11 @@
         }
 
         .container{
-            margin-block: 4rem;
-            margin-left: 5rem;
+            margin-block: 2rem;
+            /* margin-left: 5rem; */
         }
 
     </style>
-</head>
-<body>
 
     <div class="error">
         @if($errors->any())
@@ -184,29 +165,36 @@
     </div>
 
     <div class="navigation">
-        <div class="menu">
-            {{-- <p class="header-menu">Menu</p> --}}
-            <a href="/dashboard" class="dashboard-ref"><i class="fa fa-home" style="font-size:28px;color:black"></i></a>
-            <a href="/dashboard" class="dashboard-ref"><i class="fa fa-gear" style="font-size:28px;color:black"></i></a>
-    
-        </div>
 
-        <button class="back btn btn-outline-info" onclick="window.location='{{ route('dashboard') }}'">Back</button>
-
-        <div class="container">
         
-            <div class="tasks">
-                <form action="/addtask" method="POST" class="tasks" id="tasks" style="width: 600px">
+        <div class="container">
+            <button class="back btn btn-outline-info" style="margin-top: 1rem" onclick="window.location='{{ route('dashboard') }}'">Back</button>
+
+        
+            <div class="container">
+                <form action="/addtask" method="POST">
                         @csrf
                         <h2 class="tasks-header">Task:</h2>
-                        <input type="text" class="task-name form-control" name="task_name" placeholder="Name"/>
-                        <textarea type="text" class="task-input" name="task_description" style="width: 600px" placeholder="Add task here..."></textarea>
-                        <button class="task-btns" id="btns">Add task</button>
+
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="task_name" placeholder="Name" required/>
+                            <label for="name" class="form-label">Name</label>
+                        </div>
+                        
+                        <div>
+                            <label for="task_description" class="form-label">Description</label>
+                            <textarea type="text" class="form-control h-600px" name="task_description" style="width: 600px" placeholder="Description..."></textarea>
+                        </div>                            
+
+
+                        <div class="col-auto" style="margin-top: 1rem">
+                            <button class="btn btn-success" id="btns">Add task</button>
+                        </div>
                 </form>
             </div>   
         </div>
 
     </div>
-    
-</body>
-</html>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+</x-app-layout>
