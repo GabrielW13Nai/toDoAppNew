@@ -3,11 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -48,4 +50,13 @@ class User extends Authenticatable
     public function usersTasks(){
         return $this->hasMany(Task::class, 'user_id');
     }
+
+    // public function roles(){
+    //     return $this->belongsTo(Role::class, 'model_has_roles', 'model_id');
+    // }
+
+    // public function permissions(){
+    //     return $this->belongsToMany(Permission::class, 'model_has_permissions', 'model_id');
+    // }
+
 }

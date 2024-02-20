@@ -44,4 +44,6 @@
             </x-primary-button>
         </div>
     </form>
+
+    <div class="login">If you have not registered yet<a href="{{route('auth.register')}}" class="login">&rarr;</a></div>
 </x-guest-layout>

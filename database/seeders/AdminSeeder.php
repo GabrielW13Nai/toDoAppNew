@@ -12,9 +12,11 @@ class AdminSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+
     public function run(): void
     {
         //
+
         User::create([
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
@@ -34,4 +36,6 @@ class AdminSeeder extends Seeder
         // $user->assignRole('user', 'admin');
         // $test->assignRole('user');
     }
+
+    // $permissions = 
 }

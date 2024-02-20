@@ -1,217 +1,94 @@
 <x-admin-layout>
 
-    <div class="py-12 w-full">
-        <div class="max-w-7xl mx-auto">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-            <div class="antialised bg-gray-100 dark-mode:bg-gray-900 h-100" style="margin-left: 1rem; margin-block: 1rem;">
-                <!-- component -->
-<!-- This is an example component -->
-
-
-<style>
-
-    .table {
-    border-spacing: 0 15px;
-  }
-
-  i {
-    font-size: 1rem !important;
-  }
-
-  .table tr {
-    border-radius: 20px;
-  }
-
-  tr td:nth-child(n + 6),
-  tr th:nth-child(n + 6) {
-    border-radius: 0 0.625rem 0.625rem 0;
-  }
-
-  tr td:nth-child(1),
-  tr th:nth-child(1) {
-    border-radius: 0.625rem 0 0 0.625rem;
-  }
-
-</style>
-
-  
-        <!-- component -->
-        <link
+    <link
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-        rel="stylesheet"
-        />
-        <div class="flex items-center justify-center min-h-screen bg-white">
-        <div class="col-span-12">
-            <div class="overflow-auto lg:overflow-visible">
-            <div class="flex lg:justify-between border-b-2 border-fuchsia-900 pb-1">
-                <h2 class="text-2xl text-gray-500 font-bold">All Users</h2>
-                <div class="text-center flex-auto">
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Search..."
-                    class="
-                    w-1/3
-                    py-2
-                    border-b-2 border-blue-600
-                    outline-none
-                    focus:border-yellow-400
-                    "
-                />
-                </div>
+        rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
-                <div>
-                <a href="#">
-                    <button
-                    class="
-                        bg-blue-500
-                        hover:bg-blue-700
-                        text-white
-                        py-1
-                        px-3
-                        sm
-                        rounded-full
-                    "
-                    >
-                    All
-                    </button>
-                </a>
-                <a href="#">
-                    <button
-                    class="
-                        bg-blue-500
-                        hover:bg-blue-700
-                        text-white
-                        py-1
-                        px-3
-                        sm
-                        rounded-full
-                    "
-                    >
-                    Admin
-                    </button>
-                </a>
-                <a href="#">
-                    <button
-                    class="
-                        bg-blue-500
-                        hover:bg-blue-700
-                        text-white
-                        py-1
-                        px-3
-                        sm
-                        rounded-full
-                    "
-                    >
-                    User
-                    </button></a
-                >
+    <div class="py-12 w-full">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <!-- component -->
+            <link
+            href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+            rel="stylesheet">
+            <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+            <div class="align-items-center" style="margin-left: 3rem">
+                <div class="col-span-12 w-full">
+                    <div class="overflow-auto lg:overflow-visible">
+                        <table class="table text-gray-400 border-separate space-y-6 text-lg">
+                            <thead class="bg-white-800 text-gray-500">
+                                <tr>
+                                    
+                                    <th class="p-3 text-left">Id</th>
+                                    <th class="p-3 text-left">Name</th>
+                                    <th class="p-3 text-left">Email</th>
+                                    {{-- <th class="p-3 text-left">Role</th> --}}
+                                    <th class="p-3 text-left">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach ($users as $user)
+                                    <tr class="bg-white-800">
+                                        <td class="p-3">
+                                            <div class="flex align-items-center">
+                                                <img class="rounded-full h-12 w-12  object-cover" src="https://images.unsplash.com/photo-1613588718956-c2e80305bf61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80" alt="unsplash image">
+                                                <div class="ml-3 my-auto">
+                                                    <div class="">{{ $user->id}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-3">
+                                            {{ $user->name }}
+                                        </td>
+                                        <td class="p-3">
+                                            {{ $user->email}}
+                                        </td>
+                                        {{-- <td class="p-3 font-bold">
+                                            {{ $user->role}}
+                                        </td> --}}
+                                        <td class="p-3">
+                                            <span class="bg-green-400 text-gray-50 rounded-md px-2">available</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <table class="table text-gray-400 border-separate space-y-6 text-sm">
-                <thead class="bg-blue-500 text-white">
-                <tr>
-                    <th class="p-3">Name</th>
-                    <th class="p-3 text-left">Mail</th>
-                    <th class="p-3 text-left">Phone</th>
-                    <th class="p-3 text-left">Role</th>
+            <style>
+            .table {
+                border-spacing: 0 15px;
+            }
 
-                    <th class="p-3 text-left">Status</th>
-                    <th class="p-3 text-left">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-            
-                <tr class="bg-blue-200 lg:text-black">
-                    <td class="p-3 font-medium capitalize">Gazi Rahad</td>
-                    <td class="p-3">gazi.rahad871@gmail.com</td>
-                    <td class="p-3">01648349009</td>
-                    <td class="p-3 uppercase">admin</td>
+            i {
+                font-size: 1rem !important;
+            }
 
-                    <td class="p-3">
-                    <span class="bg-green-400 text-gray-50 rounded-md px-2"
-                        >ACTIVE</span
-                    >
-                    </td>
-                    <td class="p-3">
-                    <a href="#" class="text-gray-500 hover:text-gray-100 mr-2">
-                        <i class="material-icons-outlined text-base">visibility</i>
-                    </a>
-                    <a href="#" class="text-yellow-400 hover:text-gray-100 mx-2">
-                        <i class="material-icons-outlined text-base">edit</i>
-                    </a>
-                    <a
-                        href="#"
-                        class="text-red-400 hover:text-gray-100 ml-2"
-                    >
-                        <i class="material-icons-round text-base">delete_outline</i>
-                    </a>
-                    </td>
-                </tr>
-            <tr class="bg-blue-200 lg:text-black">
-                    <td class="p-3 font-medium capitalize">Arif Uddin</td>
-                    <td class="p-3">gazi.rahad871@gmail.com</td>
-                    <td class="p-3">01648349009</td>
-                    <td class="p-3 uppercase">user</td>
+            .table tr {
+                border-radius: 20px;
+            }
 
-                    <td class="p-3">
-                    <span class="bg-green-400 text-gray-50 rounded-md px-2"
-                        >ACTIVE</span
-                    >
-                    </td>
-                    <td class="p-3">
-                    <a href="#" class="text-gray-500 hover:text-gray-100 mr-2">
-                        <i class="material-icons-outlined text-base">visibility</i>
-                    </a>
-                    <a href="#" class="text-yellow-400 hover:text-gray-100 mx-2">
-                        <i class="material-icons-outlined text-base">edit</i>
-                    </a>
-                    <a
-                        href="#"
-                        class="text-red-400 hover:text-gray-100 ml-2"
-                    >
-                        <i class="material-icons-round text-base">delete_outline</i>
-                    </a>
-                    </td>
-                </tr>
-                    <tr class="bg-blue-200 lg:text-black">
-                    <td class="p-3 font-medium capitalize">Rubel Amin</td>
-                    <td class="p-3">gazi.rahad871@gmail.com</td>
-                    <td class="p-3">01648349010</td>
-                    <td class="p-3 uppercase">admin</td>
+            tr td:nth-child(n+5),
+            tr th:nth-child(n+5) {
+                border-radius: 0 .625rem .625rem 0;
+            }
 
-                    <td class="p-3">
-                    <span class="bg-green-400 text-gray-50 rounded-md px-2"
-                        >ACTIVE</span
-                    >
-                    </td>
-                    <td class="p-3">
-                    <a href="#" class="text-gray-500 hover:text-gray-100 mr-2">
-                        <i class="material-icons-outlined text-base">visibility</i>
-                    </a>
-                    <a href="#" class="text-yellow-400 hover:text-gray-100 mx-2">
-                        <i class="material-icons-outlined text-base">edit</i>
-                    </a>
-                    <a
-                        href="#"
-                        class="text-red-400 hover:text-gray-100 ml-2"
-                    >
-                        <i class="material-icons-round text-base">delete_outline</i>
-                    </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            </div>
-        </div>
-        </div>
-            </div>
+            tr td:nth-child(1),
+            tr th:nth-child(1) {
+                border-radius: .625rem 0 0 .625rem;
+            }
+            </style>
+            </div>  
         </div>
     </div>
+
+
+
+    <!-- component -->
 
 </x-admin-layout>
 

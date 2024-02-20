@@ -241,8 +241,6 @@
         </h2>
     </x-slot>
 
-    
-
     <div class="py-12" >
         <div class="max-w-7xl mx-2">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -279,7 +277,7 @@
                 <div class="card-body d-flex flex-wrap gap-3">
                     @foreach ($tasks as $task)
                     <div class="card" style="width:200px; padding: 20px; margin-top:10px">
-                        <div class="font-sans antialiased" >{{ $task['task_name'] }}</div>
+                        <div class="font-sans antialiased" >{{ $task->task_name}}</div>
                         <div class="d-flex">
                             <div class="view"><a href="/taskdisplay/{{ $task->id }}"> <i class="fa fa-eye"
                                 style="font-size:14px;color:black"></i></a></div>
@@ -288,7 +286,7 @@
                     <form action="/deletetask/{{ $task->id }}" class="delete" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button><i class="fa fa-trash-o" style="font-size:14px; border:none; margin-left:0.5rem" ONC></i></button>
+                        <button><i class="fa fa-trash-o" style="font-size:14px; border:none; margin-left:0.5rem"></i></button>
                     </form>
                         </div>
                     </div>
