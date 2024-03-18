@@ -24,7 +24,7 @@ class AdminSeeder extends Seeder
                 'password' => '123456',
                 'is_admin' => 1,
             
-        ])->assignRoles(['admin']);
+        ])->assignRole(['admin']);
 
         User::create([
             'name' => 'test_agent',
@@ -44,7 +44,7 @@ class AdminSeeder extends Seeder
     
 ])->assignRole('Supervisor');
 
-User::where('email', '=', 'supervisor@gmail.com')->first()->syncPermissions([
+User::where('email', '=', 'admin@gmail.com')->first()->syncPermissions([
     'add_tasks',
 
     'delete_tasks',	
