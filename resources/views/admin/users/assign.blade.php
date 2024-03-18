@@ -6,13 +6,20 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">    
         <div class="flex justify-end">
+
             <a href="{{ route('admin.index') }}" class="btn btn-outline-info" style="margin-right: 2rem; margin-bottom:1rem; margin-top: 1rem">Back</a>
-        </div>
         
+        </div>
+
+        @if(auth()->user()->can('add_tasks'))
+            <div class="create">
+                <button class="btn btn-success" style="margin-left:2rem" onclick="window.location='{{ route('admin.users.addTask') }}'">Add Task</button>
+            </div>
+        @endif
         
         <div class="container position-relative">
-            
-            <div class="mt-4 p-2">
+            <div class="mt-4 p-2 ">
+               
 
                     <h4 class="font-semibold text-2xl">All Tasks</h4>
                     {{-- <div class="container align-items-start" style="margin-left:0.25rem;">
@@ -35,6 +42,7 @@
                             @endforeach
                         </div>
                     </div> --}}
+                    
                     <div class="align-items-center" style="margin-left: 3rem">
                         <div class="col-span-12 w-full">
                             <div class="overflow-auto lg:overflow-visible">
@@ -74,17 +82,21 @@
                                                         <a href="{{route('admin.users.tasks.show', $task->id)}}" class="text-gray-400 hover:text-gray-100 mr-2">
                                                             <i class="material-icons-outlined text-base">visibility</i>
                                                         </a>
-                                                        <a href="{{route('admin.users.tasks.edit.show', $task->id)}}" class="text-gray-400 hover:text-gray-100  mx-2">
-                                                            <i class="material-icons-outlined text-base">edit</i>
-                                                        </a>
-            
-                                                        <form action="{{route('admin.users.tasks.destroy', $task->id)}}" method="POST" onsubmit="return confirm('Are you sure you want to delete the task?')">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="text-gray-400 hover:text-gray-100  ml-2">
-                                                                <i class="material-icons-round text-base">delete_outline</i>
-                                                            </button>
-                                                        </form>
+                                                        @if(auth()->user()->can('delete_tasks'))
+                                                            <a href="{{route('admin.users.tasks.edit.show', $task->id)}}" class="text-gray-400 hover:text-gray-100  mx-2">
+                                                                <i class="material-icons-outlined text-base">edit</i>
+                                                            </a>
+                                                        @endif
+                                                        
+                                                        @if(auth()->user()->can('delete_tasks'))
+                                                            <form action="{{route('admin.users.tasks.destroy', $task->id)}}" method="POST" onsubmit="return confirm('Are you sure you want to delete the task?')">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="text-gray-400 hover:text-gray-100  ml-2">
+                                                                    <i class="material-icons-round text-base">delete_outline</i>
+                                                                </button>
+                                                            </form>
+                                                        @endif
                                                     
                                                     </div>
                                                 </td>

@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\UserController as UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,18 +42,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dashboard', function(){
-    if(auth()->check()){
-        auth()->user()->assignRole('user');
-        $user = auth()->user();
-        $tasks = $user->usersTasks()->latest()->get();  
-        return view('dashboard', ['user' => $user, 'tasks' => $tasks]);
-    }
-})->name('dashboard');
+Route::get('/dashboard', [UsersController::class, 'dashboard'])->name('dashboard');
+    
 
 // Route::get('/index', [IndexController::class, 'index']);
 
-Route::middleware(['auth', 'role:admin', 'verified'])->name('admin.')->prefix('admin')->group(function(){
+Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function(){
     // Route::get('/index', [IndexController::class, 'index'])->name('index');
     Route::get('/', [UserController::class, 'display'])->name('index');
     Route::get('/users/index', [UserController::class, 'index'])->name('users.index');
@@ -67,21 +62,24 @@ Route::middleware(['auth', 'role:admin', 'verified'])->name('admin.')->prefix('a
     Route::resource('/permissions', PermissionController::class);
     Route::get('/users/tasks', [UserController::class, 'showTasks'])->name('users.showTasks');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
-    Route::post('/users/{user}/roles', [UserController::class, 'assignRole'])->name('users.roles.add');
-    Route::delete('/users/{user}/roles/{role}', [UserController::class, 'removeRole'])->name('users.roles.remove');
+    Route::post('/users/{user}/roles', [UserController::class, 'addRole'])->name('users.roles.add');
+    Route::delete('/users/{user}/roles/{role}', [UserController::class, 'deleteRole'])->name('users.roles.remove');
     Route::post('/users/{user}/permissions', [UserController::class, 'givePermission'])->name('users.permissions.add');
     Route::delete('/users/{user}/permissions/{permission}', [UserController::class, 'revokePermission'])->name('users.permissions.remove');
     Route::get('/users/tasks/{task}/edit', [UserController::class, 'showeditIndividualTask'])->name('users.tasks.edit.show');
-    Route::get('/users/tasks/{task}', [UserController::class, 'showIndividualTask'])->name('users.tasks.show');
     // Route::get('/users/{user}/{task}', [UserController::class, 'show'])->name('users.view');
+    Route::get('/users/{user}/edit', [UserController::class, 'editUser'])->name('users.edit');
+    Route::put('/users/{user}/update', [UserController::class, 'updateUser'])->name('users.update');
+    Route::post('/users/tasks', [UserController::class, 'storeTask']);
+    Route::get('/users/tasks/addTask', [UserController::class, 'showAddTask'])->name('users.addTask');
+    Route::get('/users/tasks/{task}', [UserController::class, 'showIndividualTask'])->name('users.tasks.show');
     Route::put('/users/tasks/{task}', [UserController::class, 'editIndividualTask'])->name('users.tasks.edit');
     Route::delete('/users/tasks/{task}', [UserController::class, 'deleteIndividualTask'])->name('users.tasks.destroy');
 });
 
-Route::get('/addtask', [TaskController::class, 'showAddTask']);
 Route::get('/taskdisplay/{task}', [TaskController::class, 'showCurrentTask']);
 
-Route::post('/addtask', [TaskController::class, 'createTask']);
+Route::get('/users/tasks/addTask', [UsersController::class, 'userAddTask']);
 
 Route::get('/edittask/{task}', [TaskController::class, 'showEditTask']);
 

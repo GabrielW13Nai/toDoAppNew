@@ -293,16 +293,18 @@
                 @endforeach
                 </div>
             </div>
-        
-            <div class="task-card">
-                <div class="row-task">
-                    <p class="task-btn-add font-sans antialiased "><a href="/addtask"><i class="fa fa-plus" style="font-size:20px;color:black"> Add
-                                Task</i></a></p>
-                    {{-- <p class="task-btn-edit"><a href="/edittask/{{$task->id}}"><i class="fa fa-edit" style="font-size:20px;color: black"> View all tasks</i></a></p> --}}
-                    {{-- <p class="task-btn-delete"><a href="/deletetask"><i class="fa fa-trash-o" style="font-size:20px;color:red"> Delete Task</i></a></p> --}}
+            
+            @can('create', \App\Models\Task::class)
+                <div class="task-card">
+                    <div class="row-task">
+                        <p class="task-btn-add font-sans antialiased "><a href="/users/tasks/addTask"><i class="fa fa-plus" style="font-size:20px;color:black"> Add
+                                    Task</i></a></p>
+                        {{-- <p class="task-btn-edit"><a href="/edittask/{{$task->id}}"><i class="fa fa-edit" style="font-size:20px;color: black"> View all tasks</i></a></p> --}}
+                        {{-- <p class="task-btn-delete"><a href="/deletetask"><i class="fa fa-trash-o" style="font-size:20px;color:red"> Delete Task</i></a></p> --}}
+                    </div>
                 </div>
-            </div>
-        
+            @endcan
+
             <script src="//code.jquery.com/jquery.js"></script>
             <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
             <script>

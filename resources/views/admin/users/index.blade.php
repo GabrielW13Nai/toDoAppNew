@@ -25,7 +25,10 @@
                                     <th class="p-3 text-left">Email</th>
                                     {{-- <th class="p-3 text-left">Role</th> --}}
                                     <th class="p-3 text-left">Status</th>
-                                    <th class="p-6 text-left">Action</th>
+                                    <th class="p-3 text-left">Roles</th>
+                                    @if(auth()->user()->hasPermissionTo('edit_user'))
+                                        <th class="p-6 text-left">Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,26 +49,38 @@
                                         <td class="p-3">
                                             {{ $user->email}}
                                         </td>
+
+                                        
                                         {{-- <td class="p-3 font-bold">
                                             {{ $user->role}}
                                         </td> --}}
                                         <td class="p-3">
                                             <span class="bg-green-400 text-gray-50 rounded-md px-2">available</span>
                                         </td>
+
+                                        <td class="p-3">
+                                            @foreach ($user->roles as $role)
+                                            
+                                                {{$role->name}}
+                                            @endforeach
+                                        </td>
                                         <td class="p-6">
                                             <div class="container flex">
-                  
-                                                <a href="#" class="text-gray-400 hover:text-gray-100  mx-2">
-                                                    <i class="material-icons-outlined text-base">edit</i>
-                                                </a>
-    
-                                                <form action="{{ route('admin.users.destroy', $user->id )}}" method="POST" onsubmit="return confirm('Are you sure you want to delete the user?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="text-gray-400 hover:text-gray-100  ml-2">
-                                                        <i class="material-icons-round text-base">delete_outline</i>
-                                                    </button>
-                                                </form>
+                                                @if(auth()->user()->hasPermissionTo('edit_user'))
+                                                    <a href="{{ route('admin.users.edit', $user->id) }}" class="text-gray-400 hover:text-gray-100  mx-2">
+                                                        <i class="material-icons-outlined text-base">edit</i>
+                                                    </a>
+                                                @endif
+                                                
+                                                @if(auth()->user()->hasPermissionTo('edit_user'))
+                                                    <form action="{{ route('admin.users.destroy', $user->id )}}" method="POST" onsubmit="return confirm('Are you sure you want to delete the user?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="text-gray-400 hover:text-gray-100  ml-2">
+                                                            <i class="material-icons-round text-base">delete_outline</i>
+                                                        </button>
+                                                    </form>
+                                                @endif
                                                
                                                 {{-- <a href=" {{ route('admin.users.show', $user->id) }}" class="text-gray-400 hover:text-gray-100  ml-2">
                                                     <i class="material-icons-round text-base">work</i>

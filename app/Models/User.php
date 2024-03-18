@@ -6,14 +6,13 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\Role;
+use Spatie\Permission\Traits\HasPermissions;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPermissions;
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
 
@@ -50,13 +50,5 @@ class User extends Authenticatable
     public function usersTasks(){
         return $this->hasMany(Task::class, 'user_id');
     }
-
-    // public function roles(){
-    //     return $this->belongsTo(Role::class, 'model_has_roles', 'model_id');
-    // }
-
-    // public function permissions(){
-    //     return $this->belongsToMany(Permission::class, 'model_has_permissions', 'model_id');
-    // }
 
 }

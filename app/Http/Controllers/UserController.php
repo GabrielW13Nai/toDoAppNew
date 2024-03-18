@@ -2,24 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
-use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {   
-        public function login(Request $request){
+    public function userAddTask(){
+       return view('admin.users.viewtask');
+    }
 
+    public function dashboard(Request $request ){
+        
+        if(auth()->check()){
+            
+            // auth()->user()->assignRole('user');       
+            $user = auth()->user();
+            
+            $tasks = $user->usersTasks()->latest()->get();  
+            return view('dashboard', ['user' => $user, 'tasks' => $tasks]);
+        }
+        $this->authorize('create', Task::class);
+    }
+        public function login(Request $request){
+            
             $incomingFields = $request->validate([
                 'email' => 'required',
                 'password' => 'required'
             ]);
 
             if(auth()->attempt(['email' => $incomingFields['email'], 'password' => $incomingFields['password']])){
+                
                 $request->session()->regenerate();
                 flash('Logged in successfully')->success();
                 return redirect()->intended('/dashboard');
@@ -76,7 +94,7 @@ class UserController extends Controller
                     'name' => $request->input('name'),
                     'email' => $request->input('email'),
                     'password' => bcrypt($request->input('password')),
-                ]);
+                ])->assignRole('agent');
 
                 Auth::login($user);
                 return redirect('/dashboard')->with('success', 'User registered successful');

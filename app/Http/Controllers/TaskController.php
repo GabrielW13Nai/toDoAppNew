@@ -67,7 +67,7 @@ class TaskController extends Controller
         $incoming['user_id'] = auth()->id();
 
         Task::create($incoming);
-        return redirect('dashboard');
+        return redirect()->to('/admin/users/index')->with('message', 'task created successfully');
           
 }
     //

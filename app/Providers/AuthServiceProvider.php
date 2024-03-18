@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Task;
+use App\Models\User;
+use App\Policies\TaskPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -14,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         //
+        Task::class => TaskPolicy::class,
     ];
 
     /**
@@ -22,5 +27,13 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        $this->registerPolicies();
+
+        // Gate::define('add_tasks', function(User $user){return $user->is_admin;});
+        // Gate::define('edit_tasks', fn(User $user)=>$user->is_admin);
+        // Gate::define('delete_tasks', function(User $user){return $user->is_admin;});
+        // Gate::define(ability: 'edit_tasks', fn(User $user) => $user->is_admin);
+        // Gate::define(ability: 'edit_tasks', fn(User $user) => $user->is_superuser);
+
     }
 }

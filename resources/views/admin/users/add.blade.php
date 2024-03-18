@@ -25,7 +25,9 @@
                 <div>
                     <x-input-label for="name" :value="__('Name')" />
                     <x-text-input id="name" class="block mt-1 align-items-start" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" style="width:25rem"/>
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    @if (($errors->isEmpty()))
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />                        
+                    @endif
                 </div>
         
                 <!-- Email Address -->

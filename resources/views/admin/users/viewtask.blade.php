@@ -168,11 +168,16 @@
 
         
         <div class="container">
+            @role('admin')
+            <button class="back btn btn-outline-info" style="margin-top: 1rem" onclick="window.location='{{ route('admin.users.index') }}'">Back</button>            
+            @endrole
+            @role('user')
             <button class="back btn btn-outline-info" style="margin-top: 1rem" onclick="window.location='{{ route('dashboard') }}'">Back</button>
+            @endrole
 
         
             <div class="container">
-                <form action="/addtask" method="POST">
+                <form action="/admin/users/tasks" method="POST">
                         @csrf
                         <h2 class="tasks-header">Task:</h2>
 

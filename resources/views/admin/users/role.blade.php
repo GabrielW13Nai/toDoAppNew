@@ -34,9 +34,9 @@
                         @csrf
                         <div class="sm:col-span-6">
                             {{-- <label for="name" class="form-label block text-sm font-medium">Users:</label> --}}
-                            <select type="text" autocomplete="role" class="form-select form-select-sm" name="role" style="width: 500px">
+                            <select type="text" autocomplete="role" class="form-select form-select-sm" name="user_id" style="width: 500px">
                                 @foreach($users as $user)
-                                    <option value="{{ $user->name }}"> {{ $user->name }} </option>
+                                    <option value="{{ $user->id }}"> {{ $user->name }} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -45,10 +45,10 @@
 
                 <div class="mt-4 p-2">
                     <h4 class="title">Current users</h4>
-                    @if($user->roles)
+                    @if($role->users)
                         @foreach($role->users as $role_user)
                             <div class="container mb-2">
-                                <form action="{{ route('admin.users.roles.remove', [$user->id, $role_user->id])}}" method="POST" onsubmit="return confirm('Are you sure you want to delete the role?')">
+                                <form action="{{ route('admin.users.roles.remove', [$user->id, $role->id, $role_user->id])}}" method="POST" onsubmit="return confirm('Are you sure you want to delete the role?')">
                                     @csrf
                                     @method('DELETE')
                                     <div class="d-flex">

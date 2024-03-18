@@ -18,20 +18,56 @@ class AdminSeeder extends Seeder
         //
 
         User::create([
-                'name' => 'admin',
+                'name' => 'Demo_User',
                 'email' => 'admin@gmail.com',
                 'email_verified_at' => now(),
                 'password' => '123456',
+                'is_admin' => 1,
             
-        ])->assignRole('user', 'admin');
+        ])->assignRoles(['admin']);
 
         User::create([
-            'name' => 'test',
+            'name' => 'test_agent',
             'email' => 'test@gmail.com',
             'email_verified_at' => now(),
             'password' => '123456',
+            'is_admin' => 0,
         
-    ])->assignRole('user');
+    ])->assignRole('agent');
+
+    User::create([
+        'name' => 'supervisor_user',
+        'email' => 'supervisor@gmail.com',
+        'email_verified_at' => now(),
+        'password' => '123456',
+        'is_admin' => 0,
+    
+])->assignRole('Supervisor');
+
+User::where('email', '=', 'supervisor@gmail.com')->first()->syncPermissions([
+    'add_tasks',
+
+    'delete_tasks',	
+
+    'view_self_tasks',	
+
+    'export_tasks',	
+
+    'view_all_tasks',
+    
+    'create_permission',
+
+    'create_role',
+
+    'edit_task',
+
+    'alter_user_information',
+
+    'add_user',
+
+    'edit_user',
+
+]);
 
         // $user->assignRole('user', 'admin');
         // $test->assignRole('user');
