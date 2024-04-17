@@ -5,6 +5,34 @@
         rel="stylesheet">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
+    <style>
+        .btn-add{
+        background-color:#198754;
+        border-color: #198754;
+        }
+        .btn-add:hover{
+            color: #fff;
+            background-color: #157347;
+            border-color: #146c43;
+        }
+        .btn-add:focus{
+            box-shadow: rgb(60, 153, 110) 
+        }
+
+        .btn-add:active{
+            color: #fff;
+            background-color: #146c43;
+            border-color: #13653f;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+        }
+
+        .btn-add:disabled{
+            color: #fff;
+            background-color: #198754;
+            border-color: #198754
+        }
+
+    </style>
     <div class="py-12 w-full flex">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -18,6 +46,7 @@
         </div>
 
         <div class="align-items-start">
+            <h3>Add Users</h3>
             <form method="POST" action="{{ route('admin.users.addition') }}">
                 @csrf
         
@@ -62,7 +91,7 @@
         
                 <div class="flex items-center justify-end mt-4">
     
-                    <x-primary-button class="ms-4">
+                    <x-primary-button class="btn-add ms-4 btn" style="background-color:#198754;">
                         {{ __('Register') }}
                     </x-primary-button>
                 </div>

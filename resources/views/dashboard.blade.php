@@ -70,12 +70,13 @@
             display: flex;
             padding: 10px;
             flex: 1 1 30rem;
-            width: 30rem;
+            margin-left: 10rem;
+            /* width: 10rem; */
             height: 7.5rem;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             transition: 0.3s;
             border-radius: 8px;
-            background-color: #f4f4f4;
+            /* background-color: #f4f4f4; */
             color: #000;
             align-items: center;
             justify-content: center;
@@ -93,48 +94,13 @@
 
 
         a:link {
-            color: #fff;
+            /* color: #fff; */
             text-decoration: none;
         }
 
         /* span{
             font-size: 1.2rem;
         } */
-
-        .task-btn-add {
-            padding: 10px;
-            flex: 1 1 30rem;
-            width: 15rem;
-            height: 5rem;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-            border-radius: 8px;
-            background-color: lavender;
-            color: #000;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 2rem;
-            padding-top: 2rem;
-            margin-top: 3rem;
-            cursor: pointer;
-        }
-
-        .task-card {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .task-card .row-task {
-            padding: 10px;
-            flex: 1 1 30rem;
-            height: 3rem;
-            transition: 0.3s ease-in;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-        }
 
         .task-header {
             color: hsla(0, 0, 0.15, 0.87);
@@ -235,44 +201,26 @@
 
     </style>
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12" >
-        <div class="max-w-7xl mx-2">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
-
     <body>
 
-
+        <div class="w-full">
             <div class="body-task">
                 <section class="todoapp">
                     <div class="alert alert-success">
                         @include('flash::message')
+                        <div class="title">
+                            <div>Welcome back
+                                <strong>{{ $user->name }}</strong>
+                                {{-- <span> Created {{ $user->created_at->diffForHumans() }}</span> --}}
+                            </div>
+                        </div>
                     </div>
             
                 </section>
             </div>
             
-            
-            
-            
-            <div class="container align-items-start" style="margin-left:0.25rem;">
-                <div class="title" style="margin-bottom: 1rem;" >
-                    <div>Welcome back
-                        <strong>{{ $user->name }}</strong>
-                        {{-- <span> Created {{ $user->created_at->diffForHumans() }}</span> --}}
-                    </div>
-                </div>
+            <div class="container align-items-start py-5 w-full">
+                
                 <div class="task-header" >Here are your pending tasks:</div>
                 <div class="card-body d-flex flex-wrap gap-3">
                     @foreach ($tasks as $task)
@@ -291,17 +239,14 @@
                         </div>
                     </div>
                 @endforeach
-                </div>
+
             </div>
+        </div>
             
             @can('create', \App\Models\Task::class)
-                <div class="task-card">
-                    <div class="row-task">
-                        <p class="task-btn-add font-sans antialiased "><a href="/users/tasks/addTask"><i class="fa fa-plus" style="font-size:20px;color:black"> Add
-                                    Task</i></a></p>
-                        {{-- <p class="task-btn-edit"><a href="/edittask/{{$task->id}}"><i class="fa fa-edit" style="font-size:20px;color: black"> View all tasks</i></a></p> --}}
-                        {{-- <p class="task-btn-delete"><a href="/deletetask"><i class="fa fa-trash-o" style="font-size:20px;color:red"> Delete Task</i></a></p> --}}
-                    </div>
+                <div class="row-12 align-items-center text-center gap-3" style="margin-top:4rem;height:100px;width:200px;margin-left:auto;margin-right:auto;">
+                    <button class="btn btn-primary" style="color:#fff;border-radius:25px" onclick="window.location.href='/users/tasks/addTask'"><i class="fa fa-plus" style="font-size:16px;font-style:roboto"> Add
+                                Task</i></></button>
                 </div>
             @endcan
 

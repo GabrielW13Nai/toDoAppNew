@@ -7,7 +7,7 @@
 
     <div class="py-12 w-full">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mx-auto right-0">
                 <!-- component -->
             <link
             href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
@@ -17,25 +17,25 @@
                 <div class="col-span-12 w-full">
                     <div class="overflow-auto lg:overflow-visible">
                         <table class="table text-gray-400 border-separate space-y-6 text-lg">
-                            <thead class="bg-white-800 text-gray-500">
+                            <thead class="bg-white-800 text-gray-500 p-3 px-9">
                                 <tr>
                                     
-                                    <th class="p-3 text-left">Id</th>
-                                    <th class="p-3 text-left">Name</th>
-                                    <th class="p-3 text-left">Email</th>
+                                    <th class="p-3 px-9 text-left">Id</th>
+                                    <th class="p-3 px-9 text-left">Name</th>
+                                    <th class="p-3 px-9 text-left">Email</th>
                                     {{-- <th class="p-3 text-left">Role</th> --}}
-                                    <th class="p-3 text-left">Status</th>
-                                    <th class="p-3 text-left">Roles</th>
+                                    <th class="p-3 px-9 text-left">Status</th>
+                                    <th class="p-3 px-9 text-left">Roles</th>
                                     @if(auth()->user()->hasPermissionTo('edit_user'))
-                                        <th class="p-6 text-left">Action</th>
+                                        <th class="p-3 px-9 text-left">Action</th>
                                     @endif
                                 </tr>
                             </thead>
                             <tbody>
 
                                 @foreach ($users as $user)
-                                    <tr class="bg-white-800">
-                                        <td class="p-6">
+                                    <tr class="bg-white-800 p-3 px-9">
+                                        <td class="p-3 px-9">
                                             <div class="flex align-items-center">
                                                 <img class="rounded-full h-12 w-12  object-cover" src="https://images.unsplash.com/photo-1613588718956-c2e80305bf61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80" alt="unsplash image">
                                                 <div class="ml-3 my-auto">
@@ -43,10 +43,10 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="p-3">
+                                        <td class="p-3 px-9">
                                             {{ $user->name }}
                                         </td>
-                                        <td class="p-3">
+                                        <td class="p-3 px-9">
                                             {{ $user->email}}
                                         </td>
 
@@ -54,17 +54,17 @@
                                         {{-- <td class="p-3 font-bold">
                                             {{ $user->role}}
                                         </td> --}}
-                                        <td class="p-3">
+                                        <td class="p-3 px-9">
                                             <span class="bg-green-400 text-gray-50 rounded-md px-2">available</span>
                                         </td>
 
-                                        <td class="p-3">
+                                        <td class="p-3 px-9">
                                             @foreach ($user->roles as $role)
                                             
                                                 {{$role->name}}
                                             @endforeach
                                         </td>
-                                        <td class="p-6">
+                                        <td class="p-3 px-9">
                                             <div class="container flex">
                                                 @if(auth()->user()->hasPermissionTo('edit_user'))
                                                     <a href="{{ route('admin.users.edit', $user->id) }}" class="text-gray-400 hover:text-gray-100  mx-2">
